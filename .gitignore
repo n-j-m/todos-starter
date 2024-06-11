@@ -1,0 +1,9 @@
+# deps
+node_modules/
+
+.env
+.vscode
+
+*.db
+*.db-shm
+*.db-wal
