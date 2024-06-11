@@ -1,5 +1,6 @@
 import { sessions } from "@/db/schema/sessions";
 import { users } from "@/db/schema/users";
+import { todoLists } from "@/db/schema/todo-lists";
 import { Database } from "bun:sqlite";
 import { drizzle } from "drizzle-orm/bun-sqlite";
 
@@ -8,7 +9,7 @@ export function getDatabaseAndConnection(url: string) {
 
   connection.exec("PRAGMA journal_mode = WAL;");
 
-  const db = drizzle(connection, { schema: { users, sessions } });
+  const db = drizzle(connection, { schema: { users, sessions, todoLists } });
 
   return { connection, db };
 }
