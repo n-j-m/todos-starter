@@ -14,7 +14,7 @@ export type AppEnv = {
 
 export type AuthedAppVars = { user: User; sessionId: string };
 
-export type AuthedAppContext = AppEnvironmentVars & {
+export type AuthedAppEnv = AppEnvironmentVars & {
   Bindings: AppEnvironmentVars;
   Variables: AuthedAppVars;
 };

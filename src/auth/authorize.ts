@@ -1,12 +1,18 @@
 import { getLucia } from "@/auth/adapter";
 import { getDb } from "@/db";
-import { AuthedAppContext } from "@/types";
+import { AuthedAppEnv } from "@/types";
 import { UnauthorizedException } from "@/utils/problems";
 import { env } from "hono/adapter";
 import { createFactory } from "hono/factory";
-import { verify } from "hono/jwt";
+import { jwt, verify } from "hono/jwt";
+import { JWTPayload } from "hono/utils/jwt/types";
 
-const factory = createFactory<AuthedAppContext>();
+const factory = createFactory<AuthedAppEnv>();
+
+const secret = process.env.AUTH_SECRET;
+if (!secret) {
+  throw new Error("No auth secret configured");
+}
 
 export const authorize = factory.createMiddleware(async (c, next) => {
   const authHeader = c.req.header("authorization");
@@ -15,6 +21,7 @@ export const authorize = factory.createMiddleware(async (c, next) => {
   }
 
   const { AUTH_SECRET, DATABASE_URL } = env(c);
+
   const db = getDb(DATABASE_URL);
   const lucia = getLucia(db);
 
@@ -23,8 +30,14 @@ export const authorize = factory.createMiddleware(async (c, next) => {
     throw new UnauthorizedException();
   }
 
-  const payload = await verify(token, AUTH_SECRET, "HS256");
-  const sessionId = payload["session"] as string;
+  let payload: JWTPayload | null | undefined;
+  try {
+    payload = await verify(token, AUTH_SECRET, "HS256");
+  } catch (e) {
+    throw new UnauthorizedException();
+  }
+
+  const sessionId = payload?.["session"] as string | undefined;
   if (!sessionId) {
     throw new UnauthorizedException();
   }
