@@ -52,6 +52,6 @@ export const signupRoute = new Hono<AppEnv>().post(
       "HS256"
     );
 
-    return c.json({ access_token: token });
+    return c.json({ access_token: token }, 201);
   }
 );

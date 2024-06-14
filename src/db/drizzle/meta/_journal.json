@@ -15,6 +15,13 @@
       "when": 1718137405898,
       "tag": "0001_misty_ronan",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1718219962876,
+      "tag": "0002_familiar_omega_sentinel",
+      "breakpoints": true
     }
   ]
 }
