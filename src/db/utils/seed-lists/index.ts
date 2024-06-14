@@ -1,7 +1,6 @@
 import { AppDb } from "@/types";
 import * as seedUsers from "@/db/utils/seed-users";
 import { NewTodoList, todoLists } from "@/db/schema/todo-lists";
-import { generateIdFromEntropySize } from "lucia";
 
 const listsData: NewTodoList[] = [
   { id: 1, name: "Test 1", ownerId: "" },

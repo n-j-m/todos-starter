@@ -45,7 +45,7 @@ export const todoListRoutes = new Hono<AuthedAppEnv>()
       throw new InternalServerException("Unable to create todo list");
     }
 
-    return c.json(created);
+    return c.json(created, 201);
   })
   .get("/", authorize, async (c) => {
     const { DATABASE_URL } = env(c);
