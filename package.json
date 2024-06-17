@@ -2,7 +2,8 @@
   "scripts": {
     "dev": "bun run --hot src/index.ts",
     "db:gen": "drizzle-kit generate",
-    "db:migrate": "bun run src/db/utils/migrate.ts"
+    "db:migrate": "bun run src/db/utils/migrate.ts",
+    "db:seed": "bun run src/db/utils/seed-todos/run.ts"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.2.2",
